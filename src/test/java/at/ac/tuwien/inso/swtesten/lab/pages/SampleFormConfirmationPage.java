@@ -14,7 +14,11 @@ public class SampleFormConfirmationPage extends PageObject {
 		super(driver);
 	}
 
-	public String header(){
+	public String getHeader(){
 		return header.getText();
+	}
+
+	public String getUrl(){
+		return driver.getCurrentUrl();
 	}
 }

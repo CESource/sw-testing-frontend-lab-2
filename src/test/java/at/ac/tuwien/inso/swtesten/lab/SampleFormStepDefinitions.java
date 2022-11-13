@@ -35,16 +35,60 @@ public class SampleFormStepDefinitions implements En {
 			sampleFormRegistrationPage.visit();
 		});
 
-		When("I enter the first name {string}", (String searchTerm) ->{
-			sampleFormRegistrationPage.enterFirstName(searchTerm);
+		When("I enter the first name {string}", (String firstName) -> {
+			sampleFormRegistrationPage.enterFirstName(firstName);
 		});
 
-		Then("the confirmation page with header {string} is shown", (String header) -> {
-			Assert.assertEquals(header, sampleFormConfirmationPage.header());
+		When("I enter the last name {string}", (String lastName) -> {
+			sampleFormRegistrationPage.enterLastName(lastName);
 		});
 
-		Then("{string} is displayed in input field", (String text) -> {
-			Assert.assertEquals(text, sampleFormRegistrationPage.getFirstName());
+		When("I enter birthday {string}", (String birthday) -> {
+			sampleFormRegistrationPage.enterDayOfBirth(birthday);
+		});
+
+		When("I select {string} as gender", (String gender) -> {
+			sampleFormRegistrationPage.selectGender(gender);
+		});
+
+		When("I select {string} as university", (String university) -> {
+			sampleFormRegistrationPage.selectUniversity(university);
+		});
+
+		When("I select student", () -> {
+			sampleFormRegistrationPage.selectStudent();
+		});
+
+		When("I click sign up", () ->{
+			sampleFormConfirmationPage = sampleFormRegistrationPage.signUp();
+		});
+
+		Then("{string} is displayed in first name input field", (String firstName) -> {
+			Assert.assertEquals(firstName, sampleFormRegistrationPage.getFirstName());
+		});
+
+		Then("{string} is displayed in last name input field", (String lastName) -> {
+			Assert.assertEquals(lastName, sampleFormRegistrationPage.getLastName());
+		});
+
+		Then("{string} is displayed in birthday input field", (String birthday) -> {
+			Assert.assertEquals(birthday, sampleFormRegistrationPage.getBirthday());
+		});
+
+		Then("{string} is selected as gender", (String gender) -> {
+			Assert.assertTrue(sampleFormRegistrationPage.genderIsSelected(gender));
+		});
+
+		Then("{string} is selected as university", (String university) -> {
+			Assert.assertTrue(sampleFormRegistrationPage.universityIsSelected(university));
+		});
+
+		Then("student is selected", ()-> {
+			Assert.assertTrue(sampleFormRegistrationPage.studentIsSelected());
+		});
+
+		Then("the confirmation page is shown", () -> {
+			Assert.assertEquals("http://localhost:8080/echo.jsp", sampleFormConfirmationPage.getUrl());
 		});
 
 		After(SeleniumWebDriver::closeDriver);

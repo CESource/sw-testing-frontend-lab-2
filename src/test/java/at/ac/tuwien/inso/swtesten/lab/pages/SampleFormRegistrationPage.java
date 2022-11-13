@@ -1,9 +1,18 @@
 package at.ac.tuwien.inso.swtesten.lab.pages;
 
+import static at.ac.tuwien.inso.swtesten.util.SeleniumWebDriver.waitUntil;
+
 import at.ac.tuwien.inso.swtesten.util.PageObject;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class SampleFormRegistrationPage extends PageObject {
 
@@ -16,8 +25,14 @@ public class SampleFormRegistrationPage extends PageObject {
 	@FindBy(id = "dayOfBirthPicker")
 	private WebElement dayOfBirthPicker;
 
-	@FindBy(name = "gender")
-	private WebElement genderRadioButton;
+	@FindBy(xpath = "//label[contains(text(),'Unspecified')]//input[@type='radio']")
+	private WebElement unspecifiedGenderRadioButton;
+
+	@FindBy(xpath = "//label[contains(text(),'Female')]//input[@type='radio']")
+	private WebElement femaleGenderRadioButton;
+
+	@FindBy(xpath = "//label[contains(text(),'Male')]//input[@type='radio']")
+	private WebElement maleGenderRadioButton;
 
 	@FindBy(name = "uni")
 	private WebElement universityDropDown;
@@ -36,6 +51,33 @@ public class SampleFormRegistrationPage extends PageObject {
 		return firstNameInputField.getAttribute("value");
 	}
 
+	public String getLastName(){
+		return lastNameInputField.getAttribute("value");
+	}
+
+	public String getBirthday(){
+		return dayOfBirthPicker.getAttribute("value");
+	}
+
+	public boolean genderIsSelected(String gender){
+		return switch (gender) {
+			case "Female" -> femaleGenderRadioButton.isSelected();
+			case "Male" -> maleGenderRadioButton.isSelected();
+			case "Unspecified" -> unspecifiedGenderRadioButton.isSelected();
+			default -> false;
+		};
+	}
+
+	public boolean studentIsSelected(){
+		return studentCheckBox.isSelected();
+	}
+
+	public boolean universityIsSelected(String university){
+		String universityValueName = getStringConvertedToCamelCase(university);
+		WebElement option = universityDropDown.findElement(By.xpath("//option[@value='" + universityValueName +"']"));
+		return option.isSelected();
+	}
+
 	public void visit() {
 		driver.get("http://localhost:8080");
 	}
@@ -48,5 +90,62 @@ public class SampleFormRegistrationPage extends PageObject {
 	public void enterLastName(String text){
 		lastNameInputField.clear();
 		lastNameInputField.sendKeys(text);
+	}
+
+	public void enterDayOfBirth(String birthday) throws ParseException {
+		Calendar birthdayDate = getParsedDate(birthday);
+		dayOfBirthPicker.click();
+		WebElement element = driver.findElement(By.xpath("//select[@class='ui-datepicker-month']"));
+		waitUntil(ExpectedConditions.elementToBeClickable(element));
+
+		WebElement selectorMonth = driver.findElement(
+				By.xpath("//select[@class='ui-datepicker-month']/option[@value='" + (birthdayDate.get(Calendar.MONTH))+ "']"));
+		selectorMonth.click();
+
+		WebElement selectorYear = driver.findElement(By.xpath("//select[@class='ui-datepicker-year']/option[@value='" + birthdayDate.get(Calendar.YEAR) + "']"));
+		selectorYear.click();
+
+		WebElement dayPicker = driver.findElement(By.xpath("//a[contains(text(),'" + birthdayDate.get(Calendar.DAY_OF_MONTH) + "')]"));
+		dayPicker.click();
+	}
+
+	public void selectGender(String gender){
+		WebElement radioOption = driver.findElement(By.xpath("//label[contains(text(),'" + gender  + "')]//input[@type='radio']"));
+		waitUntil(ExpectedConditions.elementToBeClickable(radioOption));
+		radioOption.click();
+	}
+
+	public void selectUniversity(String university){
+		String universityValueName = getStringConvertedToCamelCase(university);
+		universityDropDown.click();
+		WebElement dropDownOption = driver.findElement(By.xpath("//option[@value='" + universityValueName +"']"));
+		JavascriptExecutor je = (JavascriptExecutor) driver;
+		je.executeScript("arguments[0].scrollIntoView(true);", dropDownOption);
+		dropDownOption.click();
+	}
+
+	public void selectStudent(){
+		studentCheckBox.click();
+	}
+
+	public SampleFormConfirmationPage signUp(){
+		submitButton.click();
+
+		return initPage(SampleFormConfirmationPage.class);
+	}
+
+	private String getStringConvertedToCamelCase(String string){
+		String[] words = string.split("[„“ -]");
+		words[0] = words[0].toLowerCase();
+
+		return String.join("", words);
+	}
+
+	private Calendar getParsedDate(String date) throws ParseException{
+		Date birthdayDate = new SimpleDateFormat("MM/dd/yyyy").parse(date);
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(birthdayDate);
+
+		return cal;
 	}
 }
