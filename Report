@@ -1,0 +1,7 @@
+There where some bugs in the feature: 
+
+the firstName field allows more than 20 characters 
+the lastName field allows only 19 characters 
+the birthday field allows younger people than 18 if typed in 
+
+
