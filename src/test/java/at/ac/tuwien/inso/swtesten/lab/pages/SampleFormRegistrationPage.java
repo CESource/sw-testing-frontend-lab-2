@@ -43,6 +43,13 @@ public class SampleFormRegistrationPage extends PageObject {
 	@FindBy(id = "btn-submit")
 	private WebElement submitButton;
 
+	@FindBy(xpath = "//ul[@class='dropdown menu']")
+	private WebElement menuDropDown;
+
+	public String getCurrentUrl(){
+		return driver.getCurrentUrl();
+	}
+
 	public SampleFormRegistrationPage(WebDriver driver) {
 		super(driver);
 	}
@@ -78,6 +85,11 @@ public class SampleFormRegistrationPage extends PageObject {
 		return option.isSelected();
 	}
 
+	public boolean showsAlert(){
+		WebElement element = driver.findElement(By.xpath("//div[@class='alert callout']"));
+		return element.isDisplayed();
+	}
+
 	public void visit() {
 		driver.get("http://localhost:8080");
 	}
@@ -109,6 +121,11 @@ public class SampleFormRegistrationPage extends PageObject {
 		dayPicker.click();
 	}
 
+	public void typeDateOfBirth(String birthday) {
+		dayOfBirthPicker.clear();
+		dayOfBirthPicker.sendKeys(birthday);
+	}
+
 	public void selectGender(String gender){
 		WebElement radioOption = driver.findElement(By.xpath("//label[contains(text(),'" + gender  + "')]//input[@type='radio']"));
 		waitUntil(ExpectedConditions.elementToBeClickable(radioOption));
@@ -132,6 +149,24 @@ public class SampleFormRegistrationPage extends PageObject {
 		submitButton.click();
 
 		return initPage(SampleFormConfirmationPage.class);
+	}
+
+	public TissSamplePage clickTISS(){
+		menuDropDown.click();
+		WebElement dropDownOption = driver.findElement(By.xpath("//a[contains(text(),'TISS')]"));
+		waitUntil(ExpectedConditions.elementToBeClickable(dropDownOption));
+		dropDownOption.click();
+
+		return initPage(TissSamplePage.class);
+	}
+
+	public TuwelSamplePage clickTUWEL(){
+		menuDropDown.click();
+		WebElement dropDownOption = driver.findElement(By.xpath("//a[contains(text(),'TUWEL')]"));
+		waitUntil(ExpectedConditions.elementToBeClickable(dropDownOption));
+		dropDownOption.click();
+
+		return initPage(TuwelSamplePage.class);
 	}
 
 	private String getStringConvertedToCamelCase(String string){

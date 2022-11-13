@@ -3,9 +3,9 @@ package at.ac.tuwien.inso.swtesten.lab.pages;
 import at.ac.tuwien.inso.swtesten.util.PageObject;
 import org.openqa.selenium.WebDriver;
 
-public class SampleFormConfirmationPage extends PageObject {
+public class TissSamplePage extends PageObject {
 
-	public SampleFormConfirmationPage(WebDriver driver) {
+	public TissSamplePage(WebDriver driver) {
 		super(driver);
 	}
 

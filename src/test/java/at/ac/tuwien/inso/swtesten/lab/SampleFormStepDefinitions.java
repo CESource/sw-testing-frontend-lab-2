@@ -2,6 +2,8 @@ package at.ac.tuwien.inso.swtesten.lab;
 
 import at.ac.tuwien.inso.swtesten.lab.pages.SampleFormConfirmationPage;
 import at.ac.tuwien.inso.swtesten.lab.pages.SampleFormRegistrationPage;
+import at.ac.tuwien.inso.swtesten.lab.pages.TissSamplePage;
+import at.ac.tuwien.inso.swtesten.lab.pages.TuwelSamplePage;
 import at.ac.tuwien.inso.swtesten.util.SeleniumWebDriver;
 import io.cucumber.java8.En;
 import org.junit.Assert;
@@ -16,6 +18,8 @@ public class SampleFormStepDefinitions implements En {
 
 	private SampleFormRegistrationPage sampleFormRegistrationPage;
 	private SampleFormConfirmationPage sampleFormConfirmationPage;
+	private TuwelSamplePage tuwelSamplePage;
+	private TissSamplePage tissSamplePage;
 
 	public SampleFormStepDefinitions() {
 		Before(() -> {
@@ -63,6 +67,26 @@ public class SampleFormStepDefinitions implements En {
 			sampleFormConfirmationPage = sampleFormRegistrationPage.signUp();
 		});
 
+		When("I type birthday {string}", (String date) -> {
+			sampleFormRegistrationPage.typeDateOfBirth(date);
+		});
+
+		When("I click TISS", () -> {
+			tissSamplePage = sampleFormRegistrationPage.clickTISS();
+		});
+
+		When("I click TUWEL", () -> {
+			tuwelSamplePage = sampleFormRegistrationPage.clickTUWEL();
+		});
+
+		Then("I am on TISS", () -> {
+			Assert.assertEquals("https://tiss.tuwien.ac.at/", tissSamplePage.getUrl());
+		});
+
+		Then("I am on TUWEL", () -> {
+			Assert.assertEquals("https://tuwel.tuwien.ac.at/theme/university_boost/login/index.php", tuwelSamplePage.getUrl());
+		});
+
 		Then("{string} is displayed in first name input field", (String firstName) -> {
 			Assert.assertEquals(firstName, sampleFormRegistrationPage.getFirstName());
 		});
@@ -89,6 +113,10 @@ public class SampleFormStepDefinitions implements En {
 
 		Then("the confirmation page is shown", () -> {
 			Assert.assertEquals("http://localhost:8080/echo.jsp", sampleFormConfirmationPage.getUrl());
+		});
+
+		Then("throws error", () -> {
+			Assert.assertTrue(sampleFormRegistrationPage.showsAlert());
 		});
 
 		After(SeleniumWebDriver::closeDriver);
