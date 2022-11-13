@@ -1,0 +1,157 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>SampleForm</title>
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/css/foundation.min.css" type="text/css"/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/foundation-icons.min.css" type="text/css"/>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/js/foundation.min.js"></script>
+</head>
+
+<body>
+<nav class="top-bar">
+	<div class="top-bar-left"></div>
+	<div class="top-bar-right">
+		<ul class="dropdown menu" data-dropdown-menu>
+			<li class="top-bar-settings">
+				<a href="#">Menu</a>
+				<ul class="menu vertical">
+					<li><a href="https://tiss.tuwien.ac.at/">TISS</a></li>
+					<li><a href="https://tuwel.tuwien.ac.at/">TUWEL</a></li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+</nav>
+
+<div class="callout text-center" style="width: 600px; margin: 80px auto;">
+	<form method="post" action="echo.jsp" data-abide novalidate>
+		<div data-abide-error class="alert callout" style="display: none;">
+			<p><i class="fi-alert"></i> There are some errors in your form.</p>
+		</div>
+		<div class="grid-y grid-padding-y">
+			<h4 class="cell">Registration</h4>
+			<h6>Please enter your data to register for a new account.</h6>
+			<fieldset class="fieldset">
+				<legend>Name*</legend>
+				<div class="grid-x">
+					<div class="small-6 cell">
+						<input type="text" name="firstname" aria-describedby="helpName" placeholder="First name" required pattern="[a-zA-Z]+" />
+					</div>
+					<div class="small-6 cell">
+						<input type="text" name="lastname" aria-describedby="helpName" placeholder="Last name" required pattern="[a-zA-Z]+" maxlength="19"/>
+					</div>
+					<p class="help-text" id="helpName">Only max 20 alphabetic characters allowed.</p>
+				</div>
+			</fieldset>
+
+			<fieldset class="fieldset">
+				<legend>Birthday*</legend>
+
+				<div class="grid-x">
+					<div class="small-12 cell">
+						<input id="dayOfBirthPicker" type="text" name="birthday" aria-describedby="helpDayOfBirth" placeholder="Birthday" required/>
+					</div>
+					<p class="help-text" id="helpDayOfBirth">Must be at least 18 years old.</p>
+				</div>
+			</fieldset>
+
+			<fieldset class="fieldset">
+				<legend>Gender*</legend>
+				<div class="grid-x">
+					<div class="small-4 cell">
+						<label><input type="radio" name="gender" value="unspecified" required/> Unspecified</label>
+					</div>
+					<div class="small-4 cell">
+						<label><input type="radio" name="gender" value="female"/> Female</label>
+					</div>
+					<div class="small-4 cell">
+						<label><input type="radio" name="gender" value="male"/> Male</label>
+					</div>
+				</div>
+			</fieldset>
+
+			<fieldset class="fieldset">
+				<legend>University*</legend>
+				<div class="grid-x">
+					<div class="small-12 cell">
+						<select title="University Name" name="uni" required>
+							<option value="" disabled selected hidden>Please select...</option>
+							<option value="alpenAdriaUniversitätKlagenfurt">Alpen-Adria Universität Klagenfurt</option>
+							<option value="danubePrivateUniversityKrems">Danube Private University Krems</option>
+							<option value="universitätFürWeiterbildungKrems">Universität für Weiterbildung Krems</option>
+							<option value="karlLandsteinerPrivatuniversitätFürGesundheitswissenschaften">Karl Landsteiner Privatuniversität für Gesundheitswissenschaften</option>
+							<option value="privatuniversitätDerKreativwirtschaft">Privatuniversität der Kreativwirtschaft</option>
+							<option value="antonBrucknerPrivatuniversität">Anton Bruckner Privatuniversität</option>
+							<option value="johannesKeplerUniversitätLinz">Johannes Kepler Universität Linz</option>
+							<option value="katholischTheologischePrivatuniversitätLinz">Katholisch-Theologische Privatuniversität Linz</option>
+							<option value="universitätFürKünstlerischeUndIndustrielleGestaltungLinz">Universität für künstlerische und industrielle Gestaltung Linz</option>
+							<option value="privatuniversitätSchlossSeeburg">Privatuniversität Schloss Seeburg</option>
+							<option value="universitätMozarteumSalzburg">Universität Mozarteum Salzburg</option>
+							<option value="paracelsusMedizinischePrivatuniversität">Paracelsus Medizinische Privatuniversität</option>
+							<option value="parisLodronUniversitätSalzburg">Paris-Lodron-Universität Salzburg</option>
+							<option value="karlFranzensUniversitätGraz">Karl-Franzens-Universität Graz</option>
+							<option value="medizinischeUniversitätGraz">Medizinische Universität Graz</option>
+							<option value="montanuniversitätLeoben">Montanuniversität Leoben</option>
+							<option value="technischeUniversitätGraz">Technische Universität Graz</option>
+							<option value="universitätFürMusikUndDarstellendeKunstGraz">Universität für Musik und darstellende Kunst Graz</option>
+							<option value="leopoldFranzensUniversitätInnsbruck">Leopold-Franzens-Universität Innsbruck</option>
+							<option value="medizinischeUniversitätInnsbruck">Medizinische Universität Innsbruck</option>
+							<option value="privateUniversitätFürGesundheitswissenschaften">Private Universität für Gesundheitswissenschaften</option>
+							<option value="medizinischeInformatikUndTechnik">Medizinische Informatik und Technik</option>
+							<option value="akademieDerBildendenKünsteWien">Akademie der bildenden Künste Wien</option>
+							<option value="musikUndKunstPrivatuniversitätDerStadtWien">Musik und Kunst Privatuniversität der Stadt Wien</option>
+							<option value="medizinischeUniversitätWien">Medizinische Universität Wien</option>
+							<option value="modulUniversityVienna">Modul University Vienna</option>
+							<option value="sigmundFreudPrivatuniversitätWien">Sigmund Freud PrivatUniversität Wien</option>
+							<option value="technischeUniversitätWien">Technische Universität Wien</option>
+							<option value="universitätFürAngewandteKunstWien">Universität für angewandte Kunst Wien</option>
+							<option value="universitätFürBodenkulturWien">Universität für Bodenkultur Wien</option>
+							<option value="universitätFürMusikUndDarstellendeKunstWien">Universität für Musik und darstellende Kunst Wien</option>
+							<option value="universitätWienAlmaMaterRudolphina">Universität Wien „Alma Mater Rudolphina“</option>
+							<option value="veterinärmedizinischeUniversitätWien">Veterinärmedizinische Universität Wien</option>
+							<option value="websterUniversityVienna">Webster University Vienna</option>
+							<option value="wirtschaftsuniversitätWien">Wirtschaftsuniversität Wien</option>
+						</select>
+					</div>
+				</div>
+			</fieldset>
+
+			<fieldset class="fieldset">
+				<legend>Acknowledgements</legend>
+				<div class="grid-x">
+					<div class="small-12 cell">
+						<label><input type="checkbox" name="student"/> I am a Student</label>
+					</div>
+				</div>
+			</fieldset>
+			<div class="cell">
+				<button id="btn-submit" value="true" class="button expanded">Sign Up</button>
+			</div>
+		</div>
+	</form>
+</div>
+
+<script>
+	$(document).ready(function () {
+		$(document).foundation();
+		$('.callout.autoclose').delay(1500).slideUp(200);
+
+		$("#dayOfBirthPicker").datepicker({
+			maxDate: "-18y",
+			changeYear: true,
+			changeMonth: true,
+			yearRange: "1900:2100"
+		});
+	});
+</script>
+
+</body>
+</html>
