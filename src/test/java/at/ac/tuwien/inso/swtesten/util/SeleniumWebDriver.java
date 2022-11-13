@@ -40,8 +40,6 @@ public class SeleniumWebDriver {
 		WebDriverManager.chromedriver().setup();
 
 		ChromeOptions options = new ChromeOptions();
-		options.addArguments("--no-sandbox");
-		options.addArguments("--disable-dev-shm-usage");
 		if (StringUtils.isNoneBlank(defaultLocale)) {
 			options.setExperimentalOption("prefs", ImmutableMap.builder().put("intl.accept_languages", defaultLocale).build());
 		}
@@ -58,7 +56,7 @@ public class SeleniumWebDriver {
 			options.setProfile(profile);
 		}
 		// TODO REMOVE AGAIN! FIX FOR SNAP CRAP!
-options.setBinary("/snap/firefox/current/usr/lib/firefox/firefox");
+			options.setBinary("/snap/firefox/current/usr/lib/firefox/firefox");
 		return new FirefoxDriver(options);
 	}
 
